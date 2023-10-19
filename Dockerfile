@@ -1,12 +1,14 @@
 # Use Ubuntu as the base image
 FROM ubuntu:latest
 
+
+
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Update package list and install necessary dependencies
 RUN apt-get update -y && \
-    apt-get install -y python3 python3-pip default-jdk g++ xvfb && \
+    apt-get install -y python3 python3-pip default-jdk g++ xvfb curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -18,7 +20,6 @@ RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor 
     apt-get install -y code && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
 # Download and install IntelliJ IDEA (CLI version)
 RUN mkdir /opt/idea && \
     curl -L https://download.jetbrains.com/idea/ideaIC-2021.2.2.tar.gz | tar -xz --strip-components=1 -C /opt/idea
