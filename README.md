@@ -25,7 +25,7 @@ This Docker container is designed to serve as a development environment where yo
   
 5. **MySQL Integration**: This container is linked to a MySQL container, which can be used for developing database-driven applications. The MySQL container is configured with default environment variables for easy access.
 
-6. **Jenkins**: The container is integrated with Jenkins for CI/CD workflows. Jenkins is exposed on port 8081 and can be accessed for automating builds, deployments, and tests.
+6. **Jenkins**: The container is integrated with Jenkins for CI/CD workflows. Jenkins is exposed on port 8082 and can be accessed for automating builds, deployments, and tests.
 
 #### **Development Use-Cases:**
 - **Web Applications**: Build and run web applications using a variety of technologies such as Node.js, Python, or Java.
@@ -37,7 +37,7 @@ This Docker container is designed to serve as a development environment where yo
 1. **Clone this Repository**: Clone this project to your local machine and navigate to the project directory.
 2. **Build and Start the Containers**: Run `docker-compose up --build` to build and start the container along with any other defined services (e.g., MySQL, Jenkins).
 3. **Access Services**: 
-   - For Jenkins: Access via `http://localhost:8081`.
+   - For Jenkins: Access via `http://localhost:8082`.
    - For the application services: Access them based on the exposed ports (`8080`, `3000`, `5000`).
 4. **Develop your Application**: Start developing your application inside the `./workspace` directory and use the pre-installed tools and services for building, testing, and deployment.
 
