@@ -1,34 +1,44 @@
-# Use Ubuntu as the base image
+# Base image with Ubuntu
 FROM ubuntu:latest
-
-
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=C.UTF-8
+ENV PATH="/root/.local/bin:$PATH"
 
-# Update package list and install necessary dependencies
-RUN apt-get update -y && \
-    apt-get install -y python3 python3-pip default-jdk g++ xvfb curl && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# Update and install essential tools
+RUN apt-get update 
+RUN apt-get install -y \
+    build-essential \
+    curl \
+    wget \
+    git \
+    vim \
+    nano \
+    python3 \
+    python3-pip \
+    nodejs \
+    npm \
+    docker.io \
+    docker-compose \
+    ssh \
+    unzip \
+    zip \
+    && apt-get clean
+    # Install Angular CLI globally
+RUN npm install -g @angular/cli \
+    && apt-get update && apt-get install -y python3-venv python3-pip \
+    && python3 -m venv /opt/venv \
+    && /opt/venv/bin/pip install virtualenv \
+    && mkdir -p /workspace
 
-# Install Visual Studio Code (CLI version)
-RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg && \
-    install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings && \
-    sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list' && \
-    apt-get update -y && \
-    apt-get install -y code && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-# Download and install IntelliJ IDEA (CLI version)
-RUN mkdir /opt/idea && \
-    curl -L https://download.jetbrains.com/idea/ideaIC-2021.2.2.tar.gz | tar -xz --strip-components=1 -C /opt/idea
+# Update package lists and install the latest version of OpenJDK
+RUN  apt-get install -y openjdk-11-jdk && rm -rf /var/lib/apt/lists/*
 
-# Set up display for running GUI applications headlessly
-ENV DISPLAY=:99
 
-# Expose port 5000 for the Flask application
-EXPOSE 5000
-
-# Command to execute when the container starts
-CMD Xvfb :99 -screen 0 1024x768x16 & code & /opt/idea/bin/idea.sh
+# Set working directory
+WORKDIR /workspace
+EXPOSE 3000
+EXPOSE 8080
+# Default entrypoint
+CMD ["bash"]
